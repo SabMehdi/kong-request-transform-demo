@@ -1,0 +1,42 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: set-upstream-host
+config:
+  replace:
+    headers:
+      - "host:httpbin.konghq.com"
+plugin: request-transformer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbin-xml
+  annotations:
+    konghq.com/protocol: "https"
+    konghq.com/plugins: set-upstream-host
+spec:
+  type: ExternalName
+  externalName: httpbin.konghq.com
+  ports:
+    - port: 443
+      targetPort: 443
+      protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: httpbin-xml-ingress
+spec:
+  ingressClassName: kong
+  rules:
+    - host: xml-proxy.example.com
+      http:
+        paths:
+          - path: /xml
+            pathType: Prefix
+            backend:
+              service:
+                name: httpbin-xml
+                port:
+                  number: 443
