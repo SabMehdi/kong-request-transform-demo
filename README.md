@@ -48,7 +48,7 @@ To test the proxy locally with your custom domain (e.g., xml-proxy.example.com),
 ```
 sudo nano /etc/hosts
 ```
-👉 On Windows:
+## 👉 On Windows:
 Edit the file located at:
 ```
 C:\Windows\System32\drivers\etc\hosts
