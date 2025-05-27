@@ -41,4 +41,23 @@ plugin: request-transformer
 ```
 kubectl apply -f config.yaml
 ```
+## 🛠️ Update Your Hosts File
+To test the proxy locally with your custom domain (e.g., xml-proxy.example.com), you need to map the domain to your Kubernetes ingress controller’s IP.
 
+## 👉 On Linux / macOS:
+```
+sudo nano /etc/hosts
+```
+👉 On Windows:
+Edit the file located at:
+```
+C:\Windows\System32\drivers\etc\hosts
+```
+##
+➕ Add a line like this:
+```
+127.0.0.1   xml-proxy.example.com
+```
+Replace 127.0.0.1 with the external IP of your Ingress controller if needed (e.g., minikube ip, k3d, or your LoadBalancer IP).
+
+This allows your browser or HTTP client to resolve xml-proxy.example.com to the right environment.
